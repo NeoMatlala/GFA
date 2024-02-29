@@ -4,9 +4,18 @@
         
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
             <div class="grid gap-4">
-                <NuxtLink to="/shoot">
-                    <img class="h-auto max-w-full rounded-lg" src="../assets/img/gfa-4.jpg" alt="">
-                </NuxtLink>
+                <div class="relative">
+                    <NuxtLink @mouseover="showOverlay = true" @mouseleave="showOverlay = false" class="block z-10 relative" to="/shoot">
+                        <img class="h-auto max-w-full z-10 rounded-lg" src="../assets/img/gfa-4.jpg" alt="">
+                        <div v-if="showOverlay">
+                            <div class="absolute inset-0 ease-in-out duration-300 bg-black opacity-80 rounded-lg"></div>
+                            <div class="absolute text-white inset-0 w-full h-full flex flex-col items-center justify-center">
+                                <h2 class=" text-xl font-medium">Get Lost in Mountains</h2>
+                                <p class="text-sm ">Matric farewell shoot</p>
+                            </div>
+                        </div>
+                    </NuxtLink>
+                </div>
                 <NuxtLink to="/shoot">
                     <img class="h-auto max-w-full rounded-lg" src="../assets/img/gfa-5.jpg" alt="">
                 </NuxtLink>
@@ -50,3 +59,13 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      showOverlay: false
+    };
+  }
+};
+</script>
