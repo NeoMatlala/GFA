@@ -1,71 +1,41 @@
 <template>
     <div class="max-w-7xl mx-auto px-2.5 md:px-0">
         <!-- masonry grid -->
-        
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-            <div class="grid gap-4">
-                <div class="relative">
-                    <NuxtLink @mouseover="showOverlay = true" @mouseleave="showOverlay = false" class="block z-10 relative" to="/shoot">
-                        <img class="h-auto max-w-full z-10 rounded-lg" src="../assets/img/gfa-4.jpg" alt="">
-                        <div v-if="showOverlay">
-                            <div class="absolute inset-0 ease-in-out duration-300 bg-black opacity-80 rounded-lg"></div>
-                            <div class="absolute text-white inset-0 w-full h-full flex flex-col items-center justify-center">
-                                <h2 class=" text-xl font-medium">Get Lost in Mountains</h2>
-                                <p class="text-sm ">Matric farewell shoot</p>
-                            </div>
-                        </div>
-                    </NuxtLink>
-                </div>
-                <NuxtLink to="/shoot">
-                    <img class="h-auto max-w-full rounded-lg" src="../assets/img/gfa-5.jpg" alt="">
+
+        <div class="flex flex-col md:flex-row justify-between items-start gap-5">
+            <div class="w-full md:w-1/3 flex flex-col gap-5">
+                <NuxtLink to="/shoot" class="hover:scale-[1.005]">
+                    <img src="../assets/img/gfa-1.jpg" class="w-full rounded h-[600px] object-cover">
                 </NuxtLink>
-                <NuxtLink to="/shoot">
-                    <img class="h-auto max-w-full rounded-lg" src="../assets/img/gfa-6.jpg" alt="">
+                <NuxtLink to="/shoot" class="hover:scale-[1.005]">
+                    <img src="../assets/img/gfa-5.jpg" class="w-full rounded h-auto">
+                </NuxtLink>
+                <NuxtLink to="/shoot" class="hover:scale-[1.005]">
+                    <img src="../assets/img/gfa-3.jpg" class="w-full rounded h-auto">
                 </NuxtLink>
             </div>
-            <div class="grid gap-4">
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="../assets/img/gfa-1.jpg" alt="">
-                </div>
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="../assets/img/gfa-2.jpg" alt="">
-                </div>
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="../assets/img/gfa-3.jpg" alt="">
-                </div>
+            <div class="w-full md:w-1/3 flex flex-col gap-5">
+                <NuxtLink to="/shoot" class="hover:scale-[1.005]">
+                    <img src="../assets/img/gfa-4.jpg" class="w-full rounded h-auto">
+                </NuxtLink>
+                <NuxtLink to="/shoot" class="hover:scale-[1.005]">
+                    <img src="../assets/img/gfa-7.jpg" class="w-full rounded object-cover h-[700px]">
+                </NuxtLink>
+                <NuxtLink to="/shoot" class="hover:scale-[1.005]">
+                    <img src="../assets/img/gfa-6.jpg" class="w-full rounded h-auto">
+                </NuxtLink>
             </div>
-            <div class="grid gap-4">
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="../assets/img/gfa-8.jpg" alt="">
-                </div>
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="../assets/img/gfa-9.jpg" alt="">
-                </div>
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="../assets/img/gfa-10.jpg" alt="">
-                </div>
-            </div>
-            <div class="grid gap-4">
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="../assets/img/gfa-11.jpg" alt="">
-                </div>
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="../assets/img/gfa-12.jpg" alt="">
-                </div>
-                <div>
-                    <img class="h-auto max-w-full rounded-lg" src="../assets/img/gfa-12.jpg" alt="">
-                </div>
+            <div class="w-full md:w-1/3 flex flex-col gap-5">
+                <NuxtLink to="/shoot" class="hover:scale-[1.005]">
+                    <img src="../assets/img/gfa-2.jpg" class="w-full object-cover rounded h-96">
+                </NuxtLink>
+                <NuxtLink to="/shoot" class="hover:scale-[1.005]">
+                    <img src="../assets/img/gfa-8.jpg" class="w-full rounded h-auto">
+                </NuxtLink>
+                <NuxtLink to="/shoot" class="hover:scale-[1.005]">
+                    <img src="../assets/img/gfa-9.jpg" class="w-full rounded h-auto">
+                </NuxtLink>
             </div>
         </div>
     </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      showOverlay: false
-    };
-  }
-};
-</script>
