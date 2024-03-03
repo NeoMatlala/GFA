@@ -15,6 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ITagService, TagService>();
+builder.Services.AddScoped<ISocialsService, SocialsService>();
 
 var app = builder.Build();
 
