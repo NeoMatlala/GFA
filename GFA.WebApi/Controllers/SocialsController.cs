@@ -1,4 +1,4 @@
-﻿using GFA.Application.Services.TagService;
+﻿using GFA.Application.Services.SocialService;
 using GFA.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

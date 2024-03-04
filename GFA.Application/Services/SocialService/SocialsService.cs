@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GFA.Application.Services.TagService
+namespace GFA.Application.Services.SocialService
 {
     public class SocialsService : ISocialsService
     {
@@ -58,7 +58,7 @@ namespace GFA.Application.Services.TagService
         {
             var link = _db.Socials.Find(id);
 
-            if(link == null)
+            if (link == null)
             {
                 return new SocialsResponse
                 {
@@ -144,7 +144,7 @@ namespace GFA.Application.Services.TagService
                     Message = "link successfully updated",
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new SocialsResponse
                 {

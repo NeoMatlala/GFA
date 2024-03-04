@@ -1,3 +1,4 @@
+using GFA.Application.Services.SocialService;
 using GFA.Application.Services.TagService;
 using GFA.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<ISocialsService, SocialsService>();
 
+builder.Services.AddCors(options => options.AddPolicy(
+    name: "AllowLocalhost",
+    policy =>
+    {
+        policy.WithOrigins("http://localhost:3000").WithOrigins("http://localhost:5000").AllowAnyMethod().AllowAnyHeader();
+    }
+    ));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,6 +34,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowLocalhost");
 
 app.UseHttpsRedirection();
 

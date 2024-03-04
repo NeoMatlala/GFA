@@ -9,7 +9,7 @@ using GFA.Domain.DTOs;
 
 namespace GFA.Application.Services.TagService
 {
-    
+
     public class TagService : ITagService
     {
         private readonly ApplicationDbContext _db;
