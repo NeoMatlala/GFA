@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GFA.Application.Services.TagService
+namespace GFA.Application.Services.SocialService
 {
     public interface ISocialsService
     {
