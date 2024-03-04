@@ -18,5 +18,6 @@ namespace GFA.Infrastructure.Data
         // DB Sets
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Social> Socials { get; set; }
+        public DbSet<Message> Messages { get; set; }
     }
 }
