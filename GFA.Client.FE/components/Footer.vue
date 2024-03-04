@@ -8,15 +8,6 @@
                     <li class="hover:underline" v-for="link in links">
                         <a :href="link.link" target="_blank" class="hover:underline">{{link.platform}}</a>
                     </li>
-                    <!-- <li class="hover:underline">
-                        <a href="#" target="_blank" class="hover:underline">Facebook</a>
-                    </li>
-                    <li class="hover:underline">
-                        <a href="#" target="_blank" class="hover:underline">Twitter</a>
-                    </li>
-                    <li class="hover:underline">
-                        <a href="#" target="_blank" class="hover:underline">TikTok</a>
-                    </li> -->
                 </ul>
             </div>
             <div>
