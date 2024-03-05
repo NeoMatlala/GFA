@@ -5,10 +5,6 @@
             <h1 class="text-center text-4xl md:text-5xl font-medium">Let's Work Together</h1>
         </div>
 
-        <div v-if="showSuccess" class="max-w-3xl mx-auto  font-medium text-center p-4 mb-10 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50" role="alert">
-            {{ successMessage }}
-        </div>
-
         <form class="max-w-3xl mx-auto" @submit.prevent="SendMessage">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-7 mb-7">
                 <div>
@@ -35,11 +31,29 @@
             
             <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">Send message</button>
         </form>
+
+        <!-- success modal -->
+        <div id="popup-modal" data-modal-backdrop="static" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <div class="relative bg-white rounded-lg shadow">
+                    <div class="p-4 md:p-5 text-center">
+                        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        <h3 class="mb-5 text-lg font-normal text-gray-5000">Message sent, we'll get back to you shortly.</h3>
+                        
+                        <button id="closeButton" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">Ok, thanks</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import { onMounted } from 'vue'
+import { Modal } from 'flowbite'
 
 export default{
     data() {
@@ -51,33 +65,53 @@ export default{
                 subject: '',
                 messageBody: ''
             },
-            showSuccess: false,
-            successMessage: '',
         }
     },
-    mounted(){
-        this.showSuccess = false
+    setup(){
+        onMounted(async () => {
+            const $modalElement = document.querySelector('#popup-modal');
+            const $closeButton = document.querySelector('#closeButton');
+            const modalOptions = {
+                backdrop: 'static',
+                backdropClasses: 'bg-gray-900 bg-opacity-50 fixed inset-0 z-40'
+            }
+            if ($modalElement) {
+                const modal = new Modal($modalElement, modalOptions);
+                 $closeButton.addEventListener('click', () => modal.hide());
+            }
+        })
     },
     methods: {
         async SendMessage() {
+            const $closeButton = document.querySelector('#closeButton');
+            const modalOptions = {
+                backdrop: 'static',
+                backdropClasses: 'bg-gray-900 bg-opacity-50 fixed inset-0 z-40'
+            }
+
             try {
                 const response = await axios.post("https://localhost:7049/api/Message/create-message", this.message)
+
+                const $modalElement = document.querySelector('#popup-modal');
                 
-                console.log(response.data)
-
                 if (response.data.success) {
-                    this.showSuccess = true
-
-                    this.successMessage = response.data.message
-
                     this.message.name = ''
                     this.message.phoneNumber = ''
                     this.message.email = ''
                     this.message.subject = ''
                     this.message.messageBody = ''
+
+                    const modal = new Modal($modalElement, modalOptions);
+                    modal.toggle()
                 }
 
-                
+                if ($modalElement) {
+                    const modal = new Modal($modalElement, modalOptions);
+                    modal.toggle();
+                    $closeButton.addEventListener('click', () => {
+                        modal.hide()
+                    });
+                }
             } catch (error) {
                 console.log("Error sending message", error)
             }
