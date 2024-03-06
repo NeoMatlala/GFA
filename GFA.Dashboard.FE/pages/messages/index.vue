@@ -65,6 +65,11 @@ export default{
                 const response = await axios.get("https://localhost:7049/api/Message/get-all-messages")
                 
                 this.messages = response.data.reverse()
+                const unreadObjects = this.messages.filter(obj => obj.isRead == 0)
+
+                const messageCount = ureadMessages()
+                messageCount.value = unreadObjects.length
+
             } catch (error) {
                 console.log("Error getting messages", error)
             }
