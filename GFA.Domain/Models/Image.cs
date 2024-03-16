@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace GFA.Domain.Models
@@ -15,6 +16,7 @@ namespace GFA.Domain.Models
         public byte[]? ShootImage { get; set; }
 
         // navigation property
-        public ICollection<ShootImages> ShootImages { get; set; }
+        //[JsonIgnore]
+        //public List<ShootImages> ShootImages { get; set; }
     }
 }

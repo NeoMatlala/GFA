@@ -1,5 +1,6 @@
 using GFA.Application.Services.ContactService;
 using GFA.Application.Services.ProfileService;
+using GFA.Application.Services.ShootService;
 using GFA.Application.Services.SocialService;
 using GFA.Application.Services.TagService;
 using GFA.Infrastructure.Data;
@@ -21,6 +22,7 @@ builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<ISocialsService, SocialsService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IShootService, ShootService>();
 
 builder.Services.AddCors(options => options.AddPolicy(
     name: "AllowLocalhost",

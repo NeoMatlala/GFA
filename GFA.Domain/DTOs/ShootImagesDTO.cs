@@ -1,14 +1,14 @@
-﻿using System;
+﻿using GFA.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace GFA.Domain.Models
+namespace GFA.Domain.DTOs
 {
-    public class Shoot
+    public class ShootImagesDTO
     {
         public int ShootId { get; set; }
         public string Name { get; set; }
@@ -19,8 +19,6 @@ namespace GFA.Domain.Models
         [Column(TypeName = "Image")]
         public byte[]? MainImage { get; set; }
 
-        // navigation property
-        [JsonIgnore]
-        public List<ShootImages> ShootImages { get; set; }
+        public List<ImagesShootDTO> ShootImages { get; set; }
     }
 }
