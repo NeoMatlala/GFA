@@ -1,6 +1,7 @@
 ﻿using GFA.Domain.DTOs;
 using GFA.Domain.Models;
 using GFA.Infrastructure.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -84,6 +85,103 @@ namespace GFA.Application.Services.ShootService
                 Message = "Shoot found",
                 shootObj = shootsDTO
             };
+        }
+
+        public ShootResponse CreateShoot(Shoot model, IFormFile? mainImage, List<IFormFile>? shootImages)
+        {
+            try
+            {
+                // Shoot table image = main image
+                var shoot = new Shoot
+                {
+                    Name = model.Name,
+                    Client = model.Client,
+                    Category = model.Category,
+                    Description = model.Description
+                };
+
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    mainImage.CopyTo(stream);
+
+                    shoot.MainImage = stream.ToArray();
+
+                    var mainImageEntity = new Image
+                    {
+                        ShootImage = stream.ToArray()
+                    };
+
+                    _db.Images.Add(mainImageEntity);
+                    _db.SaveChanges();
+                }
+
+                _db.Shoots.Add(shoot);
+                _db.SaveChanges();
+
+                // shoot images
+                if (shootImages != null && shootImages.Any())
+                {
+                    foreach(var imageFile in shootImages)
+                    {
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            imageFile.CopyTo(stream);
+
+                            var imageEntity = new Image
+                            {
+                                ShootImage = stream.ToArray()
+                            };
+
+                            _db.Images.Add(imageEntity);
+                            _db.SaveChanges();
+
+                            var shootImage = new ShootImages
+                            {
+                                ShootId = shoot.ShootId,
+                                ImageId = imageEntity.ImageId
+                            };
+
+                            _db.ShootImages.Add(shootImage);
+                        }
+                    }
+
+                    _db.SaveChanges();
+                }
+
+                // image in images Table
+                //var images = new Image
+                //{
+                //    ShootImage = shoot.MainImage
+                //};
+
+                //_db.Images.Add(images);
+                //_db.SaveChanges();
+
+                // image in shootImages
+                //var shootImages = new ShootImages
+                //{
+                //    ShootId = shoot.ShootId,
+                //    ImageId = images.ImageId
+                //};
+
+                //_db.ShootImages.Add(shootImages);
+                //_db.SaveChanges();
+
+                return new ShootResponse
+                {
+                    Success = true,
+                    Message = "Shoot successfully created"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ShootResponse
+                {
+                    Success = false,
+                    Message = $"Error creating shoot: {ex}"
+                };
+            }
+            
         }
     }
 }

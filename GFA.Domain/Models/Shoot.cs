@@ -16,11 +16,12 @@ namespace GFA.Domain.Models
         public string Category { get; set; }
         public string Description { get; set; }
 
-        [Column(TypeName = "Image")]
+        [Column(TypeName = "Main Image")]
         public byte[]? MainImage { get; set; }
 
         // navigation property
         [JsonIgnore]
-        public List<ShootImages> ShootImages { get; set; }
+        public List<ShootImages>? ShootImages { get; set; }
+        //public List<Image> Images { get; set;}
     }
 }

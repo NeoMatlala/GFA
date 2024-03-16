@@ -28,7 +28,7 @@ export default{
         async getProfile() {
             try {
                 const response = await axios.get("https://localhost:7049/api/Profile/get-profile")
-                console.log(response.data[0])
+                //console.log(response.data[0])
                 this.profile = response.data[0]
             } catch (error) {
                 console.log("Error getting profile", error)
