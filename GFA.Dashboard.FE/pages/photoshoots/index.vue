@@ -24,27 +24,63 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b">
+                        <tr class="bg-white border-b" v-for="shoot in shoots">
                             <th scope="row" class="px-6 py-4 font-medium ">
-                                Matric delight
+                                {{ shoot.name }}
                             </th>
                             <td class="px-6 py-4">
-                                Thobeka Zwane
+                                {{ shoot.client }}
                             </td>
                             <td class="px-6 py-4">
-                                Matric dance shoot
+                                {{ shoot.category }}
                             </td>
                             <td class="px-6 py-4 flex justify-end items-center gap-5">
-                                <NuxtLink to="photoshoots/view" class="hover:underline text-blue-600">View</NuxtLink>
-                                <NuxtLink to="photoshoots/delete" class="hover:underline text-red-600">Delete</NuxtLink>
-                                <!-- <NuxtLink :to="`/messages/view/${message.messageId}`" class="hover:underline text-blue-600">View</NuxtLink> -->
+                                <NuxtLink :to="`/photoshoots/view/${shoot.shootId}`" class="hover:underline text-blue-600">View</NuxtLink>
+                                <NuxtLink :to="`/photoshoots/delete/${shoot.shootId}`" class="hover:underline text-red-600">Delete</NuxtLink>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
-        
     </div>
 </template>
+
+<script>
+import axios from 'axios'
+
+export default{
+    data() {
+        return{
+            shoots: [
+                {
+                shootId: '',
+                name: '',
+                client: '',
+                description: '',
+                category: '',
+                shootImages: [
+                        {
+                            shootImage: null
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    mounted() {
+        this.getShoots()
+    },
+    methods: {
+        async getShoots() {
+            try {
+                const response = await axios.get("https://localhost:7049/api/Shoot/get-shoots")
+
+                this.shoots = response.data
+            } catch (error) {
+                console.log("Error getting contact details", error)
+            }
+        }
+    }
+}
+</script>
