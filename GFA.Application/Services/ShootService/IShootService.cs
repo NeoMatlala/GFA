@@ -15,6 +15,8 @@ namespace GFA.Application.Services.ShootService
 
         ShootResponse GetShoot(int id);
 
+        ShootResponse DeleteShoot(int id);
+
         ShootResponse CreateShoot(Shoot model, IFormFile? mainImage, List<IFormFile>? shootImages);
     }
 }

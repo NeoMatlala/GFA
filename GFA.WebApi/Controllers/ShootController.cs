@@ -56,5 +56,19 @@ namespace GFA.WebApi.Controllers
 
             return Ok(result);
         }
+
+        // DELETE
+        [HttpDelete("delete-shoot/{id}")]
+        public IActionResult DeleteShoot(int id)
+        {
+            var result = _shootService.DeleteShoot(id);
+
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
     }
 }

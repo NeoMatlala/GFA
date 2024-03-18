@@ -183,5 +183,49 @@ namespace GFA.Application.Services.ShootService
             }
             
         }
+
+        public ShootResponse DeleteShoot(int id)
+        {
+            try
+            {
+                if (id == 0 || id == null)
+                {
+                    return new ShootResponse
+                    {
+                        Success = false,
+                        Message = "Invalid ID"
+                    };
+                }
+
+                var shoot = _db.Shoots.Find(id);
+
+                if (shoot == null)
+                {
+                    return new ShootResponse
+                    {
+                        Success = false,
+                        Message = "Shoot does not exist"
+                    };
+                }
+
+                _db.Shoots.Remove(shoot);
+                _db.SaveChanges();
+
+                return new ShootResponse
+                {
+                    Success = true,
+                    Message = $"{shoot.Name} shoot successfully deleted"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ShootResponse
+                {
+                    Success = false,
+                    Message = $"Error deleting shoot: {ex.Message}"
+                };
+            }
+            
+        }
     }
 }
