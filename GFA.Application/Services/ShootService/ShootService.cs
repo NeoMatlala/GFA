@@ -184,6 +184,108 @@ namespace GFA.Application.Services.ShootService
             
         }
 
+        public ShootResponse UpdateShoot(int id, UpdateShootDTO model, IFormFile? mainImage, List<IFormFile>? shootImages)
+        {
+            try
+            {
+                if (id == 0)
+                {
+                    return new ShootResponse
+                    {
+                        Success = false,
+                        Message = $"Ivalid ID!"
+                    };
+                }
+
+                var shoot = _db.Shoots.Include(si => si.ShootImages).ThenInclude(i => i.Image).FirstOrDefault(ID => ID.ShootId == id);
+                //var shoot = GetShoot(id);
+
+                if (shoot == null)
+                {
+                    return new ShootResponse
+                    {
+                        Success = false,
+                        Message = "Shoot not found"
+                    };
+                }
+
+                if(!string.IsNullOrEmpty(model.Name))
+                {
+                    shoot.Name = model.Name;
+                }
+
+                if(!string.IsNullOrEmpty(model.Category))
+                {
+                    shoot.Category = model.Category;
+                }
+
+                if (!string.IsNullOrEmpty(model.Description))
+                {
+                    shoot.Description = model.Description;
+                }
+
+                if (!string.IsNullOrEmpty(model.Client))
+                {
+                    shoot.Client = model.Client;
+                }
+
+                if(mainImage != null)
+                {
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        mainImage.CopyTo(stream);
+                        shoot.MainImage = stream.ToArray();
+                    }
+                }
+
+                _db.Shoots.Update(shoot);
+
+                if (shootImages.Count > 0)
+                {
+                    foreach (var imageFile in shootImages)
+                    {
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            imageFile.CopyTo(stream);
+
+                            var imageEntity = new Image
+                            {
+                                ShootImage = stream.ToArray()
+                            };
+
+                            _db.Images.Add(imageEntity);
+                            _db.SaveChanges();
+
+                            var shootImage = new ShootImages
+                            {
+                                ShootId = shoot.ShootId,
+                                ImageId = imageEntity.ImageId
+                            };
+
+                            _db.ShootImages.Add(shootImage);
+                            _db.SaveChanges();
+                        }
+                    }
+                }
+
+                _db.SaveChanges();
+
+                return new ShootResponse
+                {
+                    Success = true,
+                    Message = $"{shoot.Name} successfully updated."
+                };
+
+            } catch(Exception ex)
+            {
+                return new ShootResponse
+                {
+                    Success = false,
+                    Message = $"Error updating shoot: {ex.Message}"
+                };
+            }
+        }
+
         public ShootResponse DeleteShoot(int id)
         {
             try
