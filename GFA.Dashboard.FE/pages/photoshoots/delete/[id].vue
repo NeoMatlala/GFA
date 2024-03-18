@@ -10,7 +10,7 @@
                     <p class="text-sm text-slate-600 mt-5 mb-10 whitespace-pre-wrap">{{ shoot.description }}</p>
                 </div>
                 <div class="flex justify-end items-enter gap-2">
-                    <button class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">Delete</button>
+                    <button class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5" @click="handleDelete">Delete</button>
                     <NuxtLink to="/photoshoots" class="text-slate-400 bg-slate-50 border border-slate-300 hover:bg-slate-200 focus:ring-4 focus:outline-none rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Cancel</NuxtLink>
                 </div>
                 
@@ -53,10 +53,19 @@ export default{
                 const response = await axios.get(`https://localhost:7049/api/Shoot/get-shoot/${this.id}`)
 
                 this.shoot = response.data.shootObj
-
-                console.log(this.shoot)
             } catch (error) {
                 console.log("Error getting contact details", error)
+            }
+        },
+        async handleDelete() {
+            try {
+                const response = await axios.delete(`https://localhost:7049/api/Shoot/delete-shoot/${this.id}`)
+
+                if (response.data.success) {
+                    this.$router.replace('/photoshoots');
+                }
+            } catch (error) {
+                console.log("Error deleting shoot: ", error.message)
             }
         }
     }
